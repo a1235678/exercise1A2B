@@ -31,7 +31,6 @@ class ViewController: UIViewController {
         
         var duplicate = false
         
-        
         if answerText.text?.characters.count == 4{
             for char in (answerText.text?.characters)!{
                 if (answerText.text?.count(of: String(char)))! > 1{
@@ -39,7 +38,7 @@ class ViewController: UIViewController {
                 }
                 
             }
-            
+            //shouldn't key in same numbers at once
             if !duplicate{
                 let result = guess(guessNumber: answerText.text!)
                 historyText.text = historyText.text + "\(result)\n"
@@ -71,7 +70,7 @@ class ViewController: UIViewController {
 
     func random_answer() -> String{
         var ans = ""
-        
+        //generating a new answer...
         while (true){
             let random  = String(Int(arc4random() % 9) + 1)
             if !ans.contains(random){
@@ -91,6 +90,7 @@ class ViewController: UIViewController {
         var a = 0
         var b = 0
         
+        //comparing...
         for i in 0...3{
             
             if answer_array[i] == guessArray[i]{
@@ -100,6 +100,8 @@ class ViewController: UIViewController {
             }
             
         }
+        
+        //correct
         if a == 4{
             showAlertWithRestart(String(format: "correct by %d times!!\nthe answer is %@\npress OK to restart.", count, answer), viewController: self)
             
@@ -171,6 +173,7 @@ extension ViewController: UITextFieldDelegate{
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
+        //limited count of numbers
         let countOfWords = string.characters.count +  textField.text!.characters.count - range.length
         if countOfWords > 4{
             return false
@@ -186,6 +189,7 @@ extension ViewController: UITextFieldDelegate{
 }
 
 extension String{
+    //get the count of string
     func count(of string: String, caseSensitive: Bool = true) -> Int {
         if !caseSensitive {
             return lowercased().components(separatedBy: string.lowercased()).count - 1
